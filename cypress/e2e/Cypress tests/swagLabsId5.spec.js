@@ -15,5 +15,20 @@ describe('finishing order', () => {
 
     it('all inputs are correct', () => {
         cy.get('.shopping_cart_link').click();
+        cy.get('[name="checkout"]').click();
+        
+        const text = ['Steven', 'Khada', '16-555']
+
+        cy.get('.checkout_info input').then(input => {
+            cy.wrap(input).eq(0).clear().type(text[0]).should('have.value', text[0]);
+            cy.wrap(input).eq(1).clear().type(text[1]).should('have.value', text[1]);
+            cy.wrap(input).eq(2).clear().type(text[2]).should('have.value', text[2]);
+        });
+        cy.get('#continue').click();
+        cy.get('#finish').click();
+        cy.get('.pony_express').should('have.attr', 'src')
+        cy.get('.complete-header').should('contain', 'Thank you for your order!')
+        cy.get('.complete-text').should('contain', 'Your order has been dispatched, and will arrive just as fast as the pony can get there!')
+        cy.get('#back-to-products').should('exist')
     })
 })
