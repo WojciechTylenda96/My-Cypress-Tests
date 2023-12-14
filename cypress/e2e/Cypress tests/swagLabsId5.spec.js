@@ -6,6 +6,8 @@ const loginNaddToCart = () => {
     cy.get('[placeholder="Password"]').type('secret_sauce');
     cy.get('[name="login-button"]').click();
     cy.get('.inventory_list button').first().click();
+    cy.get('.shopping_cart_link').click();
+    cy.get('[name="checkout"]').click();
 }
 
 const text = ['Steven', 'Khada', '16-555']
@@ -16,9 +18,6 @@ describe('finishing order', () => {
     });
 
     it('all inputs are correct', () => {
-        cy.get('.shopping_cart_link').click();
-        cy.get('[name="checkout"]').click();
-
         cy.get('.checkout_info input').then(input => {
             cy.wrap(input).eq(0).clear().type(text[0]).should('have.value', text[0]);
             cy.wrap(input).eq(1).clear().type(text[1]).should('have.value', text[1]);
@@ -44,8 +43,6 @@ describe('finishing order', () => {
     })
     
     it('name is empty', () => {
-        cy.get('.shopping_cart_link').click();
-        cy.get('[name="checkout"]').click();
         cy.get('.checkout_info input').then(input => {
             cy.wrap(input).eq(0).clear().should('be.empty')
             cy.wrap(input).eq(1).clear().type(text[1]).should('have.value', text[1])
@@ -59,8 +56,6 @@ describe('finishing order', () => {
     })
 
     it('lastname is empty', () => {
-        cy.get('.shopping_cart_link').click();
-        cy.get('[name="checkout"]').click();
         cy.get('.checkout_info input').then(input => {
             cy.wrap(input).eq(0).clear().type(text[0]).should('have.value', text[0]);
             cy.wrap(input).eq(1).clear().should('be.empty');
@@ -74,8 +69,6 @@ describe('finishing order', () => {
     })
 
     it('postal code is empty', () => {
-        cy.get('.shopping_cart_link').click();
-        cy.get('[name="checkout"]').click();
         cy.get('.checkout_info input').then(input => {
             cy.wrap(input).eq(0).clear().type(text[0]).should('have.value', text[0]);
             cy.wrap(input).eq(1).clear().type(text[1]).should('have.value', text[1]);
