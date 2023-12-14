@@ -31,4 +31,16 @@ describe('finishing order', () => {
         cy.get('.complete-text').should('contain', 'Your order has been dispatched, and will arrive just as fast as the pony can get there!')
         cy.get('#back-to-products').should('exist')
     })
+
+    it.only('all inputs are empty', () => {
+        cy.get('.shopping_cart_link').click();
+        cy.get('[name="checkout"]').click();
+        cy.get('#continue').click();
+        cy.get('.checkout_info input').each((input, index) => {
+            cy.wrap(input).should('have.class', 'error')
+            cy.wrap(input).should('exist', 'error_icon')
+        })
+        cy.get('[data-test="error"]').should('exist')
+    })
+    
 })
