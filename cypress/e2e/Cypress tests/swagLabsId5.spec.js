@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-const loginNaddToCart = () => {
+const loginAndAddToCart = () => {
     cy.visit('https://www.saucedemo.com/');
     cy.get('[placeholder="Username"]').type('standard_user');
     cy.get('[placeholder="Password"]').type('secret_sauce');
@@ -14,7 +14,7 @@ const text = ['Steven', 'Khada', '16-555']
 
 describe('finishing order', () => {
     beforeEach(() => {
-        loginNaddToCart();
+        loginAndAddToCart();
     });
 
     it('all inputs are correct', () => {

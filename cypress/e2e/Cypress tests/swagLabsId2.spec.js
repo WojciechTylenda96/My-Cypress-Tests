@@ -1,12 +1,26 @@
 /// <reference types="cypress" />
 
+describe('login', () => {
+
+    beforeEach(() => {
+        cy.visit('https://www.saucedemo.com/')
+    })
+
+    it.only('login with correct log&pass', () => {
+        cy.get('[placeholder="Username"]').type('standard_user').should('have.value', 'standard_user');
+        cy.get('[placeholder="Password"]').type('secret_sauce').should('have.value', 'secret_sauce');
+        cy.get('[name="login-button"]').click();
+    })
+})
+
+
+
 const login = () => {
     cy.visit('https://www.saucedemo.com/');
     cy.get('[placeholder="Username"]').type('standard_user');
     cy.get('[placeholder="Password"]').type('secret_sauce');
     cy.get('[name="login-button"]').click();
 }
-
 
 describe('add and remove products', () => {
     
