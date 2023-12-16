@@ -43,7 +43,7 @@ describe('add and remove products', () => {
         onInventoryPage.checkIfItemDeletedFromCart();
     })
 
-    it.only('delete from product page', () => {
+    it('delete from product page', () => {
         onInventoryPage.addItemToCartFromHomePageByIndex(2);
         navigateTo.productDetailsByItemIndex(2);
         onInventoryPage.deleteItemAtProductDetailsPage();
@@ -53,17 +53,10 @@ describe('add and remove products', () => {
     })
 
     it('delete from shop cart', () => {
-        cy.get('.inventory_list button').first().as('btn');
-        cy.get('@btn').should('contain', 'Add to cart');
-        cy.get('@btn').click();
-        cy.get('@btn').should('contain', 'Remove');
-        cy.get('.shopping_cart_badge').should('exist');
-        cy.get('.shopping_cart_link').click();
-        cy.get('.cart_list').find('.cart_item').should('exist');
-        cy.get('.item_pricebar button').as('btn2');
-        cy.get('@btn2').should('contain', 'Remove');
-        cy.get('@btn2').click();
-        cy.get('.cart_list').find('.cart_item').should('not.exist')
+        onInventoryPage.addItemToCartFromHomePageByIndex(3);
+        navigateTo.shopCart();
+        onInventoryPage.deleteItemAtShopCart();
+        onInventoryPage.checkIfItemDeletedFromCart()
     })
 
 })
