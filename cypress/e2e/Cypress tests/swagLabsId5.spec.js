@@ -1,11 +1,10 @@
 /// <reference types="cypress" />
 
-const loginAndAddToCart = () => {
-    cy.visit('https://www.saucedemo.com/');
-    cy.get('[placeholder="Username"]').type('standard_user');
-    cy.get('[placeholder="Password"]').type('secret_sauce');
-    cy.get('[name="login-button"]').click();
-    cy.get('.inventory_list button').first().click();
+import { onInventoryPage } from "../../support/page_objects/iventoryPage";
+import { onLoginPage } from "../../support/page_objects/loginPage";
+
+const addToCart = () => {
+    onInventoryPage.addItemToCartByIndex(0);
     cy.get('.shopping_cart_link').click();
     cy.get('[name="checkout"]').click();
 }
@@ -14,7 +13,8 @@ const text = ['Steven', 'Khada', '16-555']
 
 describe('finishing order', () => {
     beforeEach(() => {
-        loginAndAddToCart();
+        onLoginPage.logIn('standard_user', 'secret_sauce');
+        addToCart();
     });
 
     it('all inputs are correct', () => {
@@ -79,5 +79,6 @@ describe('finishing order', () => {
         cy.get('.checkout_info input').eq(2).should('exist', 'error_icon');
         cy.get('[data-test="error"]').should('contain', 'Error: Postal Code is required')
     })
+    
     
 })

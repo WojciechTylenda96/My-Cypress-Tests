@@ -1,52 +1,39 @@
 /// <reference types="cypress" />
 
+import { onInventoryPage } from "../../support/page_objects/iventoryPage";
+import { onLoginPage } from "../../support/page_objects/loginPage";
+import { navigateTo } from "../../support/page_objects/navigationPage";
+
 describe('login', () => {
 
-    beforeEach(() => {
-        cy.visit('https://www.saucedemo.com/')
-    })
-
-    it.only('login with correct log&pass', () => {
-        cy.get('[placeholder="Username"]').type('standard_user').should('have.value', 'standard_user');
-        cy.get('[placeholder="Password"]').type('secret_sauce').should('have.value', 'secret_sauce');
-        cy.get('[name="login-button"]').click();
+    it('login with correct log&pass', () => {
+        onLoginPage.logIn('standard_user', 'secret_sauce')
     })
 })
 
 
 
-const login = () => {
-    cy.visit('https://www.saucedemo.com/');
-    cy.get('[placeholder="Username"]').type('standard_user');
-    cy.get('[placeholder="Password"]').type('secret_sauce');
-    cy.get('[name="login-button"]').click();
-}
 
 describe('add and remove products', () => {
     
     beforeEach(() => {
-        login();
+        onLoginPage.logIn('standard_user', 'secret_sauce');
     });
 
-    it('add from home page', () => {
-        cy.get('.inventory_list button').first().as('btn');
-        cy.get('@btn').should('contain', 'Add to cart')
-        cy.get('@btn').click();
-        cy.get('@btn').should('contain', 'Remove')
-        cy.get('.shopping_cart_badge').should('exist');
-        cy.get('.shopping_cart_link').click();
-        cy.get('.cart_list').find('.cart_item').should('exist');
+    afterEach(() => {
+        onInventoryPage.resetAppStatus();
     })
 
-    it('add from product page', () => {
-        cy.get('.inventory_list .inventory_item_name ').first().click();
-        cy.get('button.btn_inventory').as('btn');
-        cy.get('@btn').should('contain', 'Add to cart');
-        cy.get('@btn').click();
-        cy.get('@btn').should('contain', 'Remove');
-        cy.get('.shopping_cart_badge').should('exist');
-        cy.get('.shopping_cart_link').click();
-        cy.get('.cart_list').find('.cart_item').should('exist');
+    it('add from home page', () => {
+        onInventoryPage.addItemToCartFromHomePageByIndex(0);
+        navigateTo.shopCart();
+        onInventoryPage.checkIfItemAddedToCart();
+    })
+
+    it.only('add from product page', () => {
+        onInventoryPage.addItemToCartFromProductDetailPageByIndex(0)
+        navigateTo.shopCart();
+        onInventoryPage.checkIfItemAddedToCart();
     })
 
     it('delete from homepage', () => {
