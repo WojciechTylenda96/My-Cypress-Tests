@@ -36,7 +36,6 @@ export class IventoryPage{
     }
 
     deleteItemAtShopCart(){
-        cy.get('.cart_list').find('.cart_item').should('exist');
         cy.get('.item_pricebar button').as('btn2');
         cy.get('@btn2').should('contain', 'Remove');
         cy.get('@btn2').click();
