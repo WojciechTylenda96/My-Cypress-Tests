@@ -9,6 +9,11 @@ export class NaviagtionPane{
         cy.get('.shopping_cart_link').click();
     }
 
+    allItems(){
+        cy.get('[id="react-burger-menu-btn"]').click();
+        cy.get('[class="bm-item-list"]').find('a[id="inventory_sidebar_link"]').click();
+    }
+
 };
 
 export const navigateTo = new NaviagtionPane();
