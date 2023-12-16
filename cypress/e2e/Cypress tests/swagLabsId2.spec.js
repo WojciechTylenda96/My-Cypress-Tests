@@ -30,40 +30,26 @@ describe('add and remove products', () => {
         onInventoryPage.checkIfItemAddedToCart();
     })
 
-    it.only('add from product page', () => {
+    it('add from product page', () => {
         onInventoryPage.addItemToCartFromProductDetailPageByIndex(0)
         navigateTo.shopCart();
         onInventoryPage.checkIfItemAddedToCart();
     })
 
     it('delete from homepage', () => {
-        cy.get('.inventory_list button').first().as('btn');
-        cy.get('@btn').should('contain', 'Add to cart')
-        cy.get('@btn').click();
-        cy.get('@btn').should('contain', 'Remove')
-        cy.get('.shopping_cart_badge').should('exist');
-        cy.get('@btn').click();
-        cy.get('@btn').should('contain', 'Add to cart')
-        cy.get('.shopping_cart_badge').should('not.exist')
-        cy.get('.shopping_cart_link').click();
-        cy.get('.cart_list').find('.cart_item').should('not.exist')
+        onInventoryPage.addItemToCartFromHomePageByIndex(2)
+        onInventoryPage.deleteItemAtHomePageByItemIndex(2);
+        navigateTo.shopCart();
+        onInventoryPage.checkIfItemDeletedFromCart();
     })
 
-    it('delete form product page', () => {
-        cy.get('.inventory_list button').first().as('btn');
-        cy.get('@btn').should('contain', 'Add to cart');
-        cy.get('@btn').click();
-        cy.get('@btn').should('contain', 'Remove');
-        cy.get('.shopping_cart_badge').should('exist');
-        cy.get('.inventory_list .inventory_item_name ').first().click();
-        cy.get('button.btn_inventory').as('btn');
-        cy.get('@btn').should('contain', 'Remove');
-        cy.get('.shopping_cart_badge').should('exist');
-        cy.get('@btn').click();
-        cy.get('@btn').should('contain', 'Add to cart');
-        cy.get('.shopping_cart_badge').should('not.exist');
-        cy.get('.shopping_cart_link').click();
-        cy.get('.cart_list').find('.cart_item').should('not.exist');
+    it.only('delete from product page', () => {
+        onInventoryPage.addItemToCartFromHomePageByIndex(2);
+        navigateTo.productDetailsByItemIndex(2);
+        onInventoryPage.deleteItemAtProductDetailsPage();
+        navigateTo.shopCart();
+        onInventoryPage.checkIfItemDeletedFromCart();
+
     })
 
     it('delete from shop cart', () => {

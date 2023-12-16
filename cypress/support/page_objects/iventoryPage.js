@@ -23,7 +23,9 @@ export class IventoryPage{
     }
 
     deleteItemAtHomePageByItemIndex(index){
-        cy.get('.inventory_list button').eq(index).click().should('contain', 'Add to cart');
+        cy.get('.inventory_list button').eq(index).as('btn');
+        cy.get('@btn').click()
+        cy.get('@btn').should('contain', 'Add to cart');
     }
 
     deleteItemAtProductDetailsPageByItemIndex(index){
