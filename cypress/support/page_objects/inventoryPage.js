@@ -2,11 +2,18 @@
 
 export class IventoryPage{
 
+    /**
+     * Reset status of website, if we relogin without that function, cart won't reset
+     */
     resetAppStatus(){
         cy.get('[id="react-burger-menu-btn"]').click();
         cy.get('[class="bm-item-list"]').find('a[id="reset_sidebar_link"]').click();
     }
 
+    /**
+     * Adding item to cart while we are on Home Page
+     * @param {from 0 - 5} index 
+     */
     addItemToCartFromHomePageByIndex(index){
         cy.get('.inventory_list button').eq(index).as('btn');
         cy.get('@btn').should('contain', 'Add to cart')
