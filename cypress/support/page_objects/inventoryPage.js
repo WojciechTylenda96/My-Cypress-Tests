@@ -11,8 +11,8 @@ export class IventoryPage{
     }
 
     /**
-     * Adding item to cart while we are on Home Page
-     * @param {from 0 - 5} index 
+     * Adding item to cart while we are at Home Page
+     * @param {*} index - value 0-5
      */
     addItemToCartFromHomePageByIndex(index){
         cy.get('.inventory_list button').eq(index).as('btn');
@@ -21,8 +21,10 @@ export class IventoryPage{
         cy.get('@btn').should('contain', 'Remove')
     }
 
-    addItemToCartFromProductDetailPageByIndex(index){
-        cy.get('.inventory_list .inventory_item_name ').eq(index).click();
+    /**
+     * Adding item to cart while we are at Product Detail Page
+     */
+    addItemToCartFromProductDetailPageByIndex(){
         cy.get('button.btn_inventory').as('btn');
         cy.get('@btn').should('contain', 'Add to cart');
         cy.get('@btn').click();
