@@ -1,4 +1,4 @@
-import { navigateTo } from "./navigationPage";
+
 
 export class IventoryPage{
 

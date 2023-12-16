@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-import { onInventoryPage } from "../../support/page_objects/iventoryPage";
+import { onInventoryPage } from "../../support/page_objects/inventoryPage";
 import { onLoginPage } from "../../support/page_objects/loginPage";
 import { navigateTo } from "../../support/page_objects/navigationPage";
 
