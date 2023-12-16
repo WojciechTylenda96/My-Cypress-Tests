@@ -28,7 +28,7 @@ export class IventoryPage{
         cy.get('@btn').should('contain', 'Add to cart');
     }
 
-    deleteItemAtProductDetailsPageByItemIndex(index){
+    deleteItemAtProductDetailsPage(){
         cy.get('button.btn_inventory').as('btn');
         cy.get('@btn').should('contain', 'Remove');
         cy.get('@btn').click();
