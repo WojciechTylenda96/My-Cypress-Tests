@@ -1,10 +1,11 @@
 /// <reference types="cypress" />
 
+import { onCheckoutPage } from "../../support/page_objects/checkoutPage";
 import { onInventoryPage } from "../../support/page_objects/inventoryPage";
 import { onLoginPage } from "../../support/page_objects/loginPage";
 
-const addToCart = () => {
-    onInventoryPage.addItemToCartByIndex(0);
+const addToCartAndCheckout = () => {
+    onInventoryPage.addItemToCartFromHomePageByIndex(0);
     cy.get('.shopping_cart_link').click();
     cy.get('[name="checkout"]').click();
 }
@@ -14,8 +15,12 @@ const text = ['Steven', 'Khada', '16-555']
 describe('finishing order', () => {
     beforeEach(() => {
         onLoginPage.logIn('standard_user', 'secret_sauce');
-        addToCart();
+        addToCartAndCheckout();
     });
+
+    afterEach(() => {
+        onInventoryPage.resetAppStatus();
+    })
 
     it('all inputs are correct', () => {
         cy.get('.checkout_info input').then(input => {
@@ -32,8 +37,6 @@ describe('finishing order', () => {
     })
 
     it('all inputs are empty', () => {
-        cy.get('.shopping_cart_link').click();
-        cy.get('[name="checkout"]').click();
         cy.get('#continue').click();
         cy.get('.checkout_info input').each((input, index) => {
             cy.wrap(input).should('have.class', 'error');
@@ -78,6 +81,12 @@ describe('finishing order', () => {
         cy.get('.checkout_info input').eq(2).should('have.class', 'error');
         cy.get('.checkout_info input').eq(2).should('exist', 'error_icon');
         cy.get('[data-test="error"]').should('contain', 'Error: Postal Code is required')
+    })
+
+    it.only('testing function', () => {
+        onCheckoutPage.inputValues('firstName');
+        onCheckoutPage.inputValues('lastName');
+        onCheckoutPage.inputValues('postalCode');
     })
     
     
