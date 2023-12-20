@@ -24,7 +24,7 @@ export class IventoryPage{
     /**
      * Adding item to cart while we are at Product Detail Page
      */
-    addItemToCartFromProductDetailPageByIndex(){
+    addItemToCartFromProductDetailPage(){
         cy.get('button.btn_inventory').as('btn');
         cy.get('@btn').should('contain', 'Add to cart');
         cy.get('@btn').click();

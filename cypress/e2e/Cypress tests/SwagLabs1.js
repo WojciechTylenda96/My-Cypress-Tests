@@ -4,16 +4,24 @@ import { onInventoryPage } from "../../support/page_objects/inventoryPage";
 import { onLoginPage } from "../../support/page_objects/loginPage";
 import { navigateTo } from "../../support/page_objects/navigationPage";
 
-describe('login', () => {
+describe('login variants', () => {
 
     it('login with correct log&pass', () => {
         onLoginPage.logIn('standard_user', 'secret_sauce')
     })
 
-    it.only('one or more field are empty', () => {
+    it('one or more field are empty, should pop up error message', () => {
         onLoginPage.verifyLogIn('Username');
         onLoginPage.verifyLogIn('Password');
         onLoginPage.verifyLogIn();
+    })
+
+    it('inputs data are wrong, should pop up error message', () => {
+        cy.visit('https://www.saucedemo.com/');
+        cy.get('[placeholder="Username"]').type('badLogin');
+        cy.get('[placeholder="Password"]').type('basPassword');
+        cy.get('[name="login-button"]').click();
+        cy.get('form').find('[data-test="error"]').should('contain', 'Epic sadface: Username and password do not match any user in this service')
     })
 })
 
@@ -36,7 +44,8 @@ describe('add and remove products', () => {
     })
 
     it('add from product page', () => {
-        onInventoryPage.addItemToCartFromProductDetailPageByIndex(0)
+        navigateTo.productDetailsByItemIndex(0)
+        onInventoryPage.addItemToCartFromProductDetailPage()
         navigateTo.shopCart();
         onInventoryPage.checkIfItemAddedToCart();
     })
