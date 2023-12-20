@@ -16,10 +16,10 @@ export class LoginPage{
         cy.get('form').then(form => {
             cy.wrap(form).contains('Login').click();
             cy.wrap(form).find('[data-test="error"]').then(message => {
-                if(param === 'Password'){
-                    cy.wrap(message).should('contain', `Epic sadface: Username is required`);
+                if(param === 'Username'){
+                    cy.wrap(message).should('contain', `Epic sadface: Password is required`);
                 } else {
-                    cy.wrap(message).should('contain', `Epic sadface: ${param} is required`);
+                    cy.wrap(message).should('contain', `Epic sadface: Username is required`);
                 }
             })
         })
