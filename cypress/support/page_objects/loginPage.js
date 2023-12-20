@@ -8,6 +8,22 @@ export class LoginPage{
         cy.get('[name="login-button"]').click();
     }
 
+    verifyLogIn(param){
+        cy.visit('https://www.saucedemo.com/');
+        if(param) {
+            cy.get(`[placeholder="${param}"]`).type(param);
+        }
+        cy.get('form').then(form => {
+            cy.wrap(form).contains('Login').click();
+            cy.wrap(form).find('[data-test="error"]').then(message => {
+                if(param === 'Password'){
+                    cy.wrap(message).should('contain', `Epic sadface: Username is required`);
+                } else {
+                    cy.wrap(message).should('contain', `Epic sadface: ${param} is required`);
+                }
+            })
+        })
+    }
 };
 
 export const onLoginPage = new LoginPage();

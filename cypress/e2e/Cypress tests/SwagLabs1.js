@@ -9,8 +9,13 @@ describe('login', () => {
     it('login with correct log&pass', () => {
         onLoginPage.logIn('standard_user', 'secret_sauce')
     })
-})
 
+    it.only('one or more field are empty', () => {
+        onLoginPage.verifyLogIn('Username');
+        onLoginPage.verifyLogIn('Password');
+        onLoginPage.verifyLogIn();
+    })
+})
 
 
 
