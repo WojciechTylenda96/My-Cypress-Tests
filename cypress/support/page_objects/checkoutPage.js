@@ -1,7 +1,12 @@
 /// <reference types="cypress" />
 
 export class CheckoutPage {
-
+    
+    /**
+     * Param variants: firstName, lastName, postalCode, (empty).
+     * The param defines which field will be left empty. If param is not defined it means all fields will be empty.
+     * @param {*} emptyField 
+     */
     inputValues(emptyField) {
 
         const data = ['Steven', 'Khada', '16-555']
