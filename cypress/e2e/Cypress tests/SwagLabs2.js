@@ -4,6 +4,16 @@ import { onCheckoutPage } from "../../support/page_objects/checkoutPage";
 import { onInventoryPage } from "../../support/page_objects/inventoryPage";
 import { onLoginPage } from "../../support/page_objects/loginPage";
 
+describe.only('checking sorting option', () => {
+    it('checking sorting options, should change sort variant', () => {
+        onLoginPage.logIn('standard_user', 'secret_sauce');
+        const arr = [1,2,3,0];
+        cy.wrap(arr).each(arr => {
+            cy.get('[class="product_sort_container"]').select(arr);
+        })
+    })
+})
+
 const addToCartAndCheckout = () => {
     onInventoryPage.addItemToCartFromHomePageByIndex(0);
     cy.get('.shopping_cart_link').click();
@@ -12,7 +22,7 @@ const addToCartAndCheckout = () => {
 
 const text = ['Steven', 'Khada', '16-555']
 
-describe.only('finishing order', () => {
+describe('finishing order', () => {
     beforeEach(() => {
         onLoginPage.logIn('standard_user', 'secret_sauce');
         addToCartAndCheckout();
